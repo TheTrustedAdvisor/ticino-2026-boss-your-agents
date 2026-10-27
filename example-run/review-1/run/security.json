@@ -1,0 +1,22 @@
+{
+  "reviewer": "security",
+  "identity": "reviewer@contoso.example",
+  "workspace": "FF Ticino Session 1 DEV",
+  "checked": [
+    "1 semantic model(s): definition (getDefinition, TMDL)",
+    "role members of Sales (XMLA, inside Fabric)",
+    "Sales: 3 sensitive column(s) in 1 table(s)"
+  ],
+  "findings": [
+    {
+      "id": "SEC-010",
+      "severity": "info",
+      "rule": "baseline",
+      "item": "FF Ticino Session 1 DEV",
+      "title": "workspace roles not readable by the reviewer (least privilege)",
+      "evidence": "GET roleAssignments as reviewer@contoso.example: HTTP 403 InsufficientWorkspaceRole. RLS does not apply to Admin, Member or Contributor; a human checks who holds those roles.",
+      "remediation": ""
+    }
+  ],
+  "at": "2026-10-27 16:22:00 UTC"
+}

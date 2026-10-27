@@ -1,0 +1,38 @@
+table Orders
+
+	measure Revenue = SUM(Orders[Amount])
+		formatString: #,0
+
+	column 'Order Id'
+		dataType: int64
+		isHidden
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: order_id
+
+	column 'Customer Id'
+		dataType: int64
+		isHidden
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: customer_id
+
+	column 'Order Date'
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		summarizeBy: none
+		sourceColumn: order_date
+
+	column Amount
+		dataType: int64
+		isHidden
+		formatString: #,0
+		summarizeBy: sum
+		sourceColumn: amount
+
+	partition orders = entity
+		mode: directLake
+		source
+			entityName: orders
+			expressionSource: 'DirectLake - lh_sales'
+

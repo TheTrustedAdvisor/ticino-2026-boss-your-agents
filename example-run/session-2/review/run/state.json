@@ -1,0 +1,103 @@
+{
+  "workspace": "FF Ticino Session 2 DEV",
+  "read_by": "reviewer@contoso.example",
+  "items": [
+    {
+      "type": "Lakehouse",
+      "name": "lh_sales"
+    },
+    {
+      "type": "SemanticModel",
+      "name": "sm_sales"
+    }
+  ],
+  "lakehouses": [
+    {
+      "name": "lh_sales",
+      "schemas": false
+    }
+  ],
+  "models": [
+    {
+      "name": "sm_sales",
+      "id": "<model-2-id>",
+      "storage": "direct_lake_onelake",
+      "source_lakehouse": "lh_sales",
+      "tables": {
+        "Customers": {
+          "columns": [
+            "Account Manager",
+            "Credit Limit",
+            "Customer Id",
+            "Customer Name",
+            "Region"
+          ],
+          "measures": [
+            "Number of Customers"
+          ],
+          "source_columns": [
+            "account_manager_upn",
+            "credit_limit",
+            "customer_id",
+            "customer_name",
+            "region"
+          ],
+          "column_sources": {
+            "Customer Id": "customer_id",
+            "Customer Name": "customer_name",
+            "Region": "region",
+            "Account Manager": "account_manager_upn",
+            "Credit Limit": "credit_limit"
+          }
+        },
+        "Orders": {
+          "columns": [
+            "Amount",
+            "Customer Id",
+            "Order Date",
+            "Order Id"
+          ],
+          "measures": [
+            "Revenue"
+          ],
+          "source_columns": [
+            "amount",
+            "customer_id",
+            "order_date",
+            "order_id"
+          ],
+          "column_sources": {
+            "Order Id": "order_id",
+            "Customer Id": "customer_id",
+            "Order Date": "order_date",
+            "Amount": "amount"
+          }
+        }
+      },
+      "relationships": [
+        {
+          "from": "Orders.'Customer Id'",
+          "to": "Customers.'Customer Id'",
+          "from_table": "Orders",
+          "to_table": "Customers"
+        }
+      ],
+      "roles": {
+        "Account Manager": {
+          "modelPermission": "read",
+          "filters": {
+            "Customers": "Customers[Account Manager] = USERPRINCIPALNAME()"
+          }
+        }
+      },
+      "members": {
+        "Account Manager": [
+          "viewer@contoso.example"
+        ]
+      },
+      "members_error": null
+    }
+  ],
+  "workspace_roles": null,
+  "workspace_roles_error": "HTTP 403 InsufficientWorkspaceRole | Workspace role is not sufficient to perform the operation"
+}

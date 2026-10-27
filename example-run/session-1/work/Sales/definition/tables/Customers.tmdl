@@ -1,0 +1,38 @@
+table Customers
+
+	measure 'Customer Count' = COUNTROWS(Customers)
+		formatString: #,0
+
+	column 'Customer ID'
+		dataType: int64
+		isHidden
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: customer_id
+
+	column 'Customer Name'
+		dataType: string
+		summarizeBy: none
+		sourceColumn: customer_name
+
+	column Region
+		dataType: string
+		summarizeBy: none
+		sourceColumn: region
+
+	column 'Account Manager'
+		dataType: string
+		summarizeBy: none
+		sourceColumn: account_manager_upn
+
+	column 'Credit Limit'
+		dataType: int64
+		formatString: #,0
+		summarizeBy: sum
+		sourceColumn: credit_limit
+
+	partition Customers = entity
+		mode: directLake
+		source
+			entityName: customers
+			expressionSource: DatabaseQuery

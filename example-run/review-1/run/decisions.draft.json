@@ -1,0 +1,9 @@
+{"facts": [
+{"fact":"F1","verdict":"open","question":"Why are the items named SalesLakehouse and Sales, and is that the naming convention you want?","note":"Names appear only on pages about other choices."},
+{"fact":"F2","verdict":"covered","page":"decision-lakehouse-load-via-onelake-pyarrow-engine-no-schemas.md","note":"Page: no schemas; state: schemas off."},
+{"fact":"F3","verdict":"covered","page":"decision-direct-lake-on-onelake-storage-mode-for-the-sales-model.md","note":"Direct Lake on OneLake matches."},
+{"fact":"F4","verdict":"open","question":"Why does the model include exactly these tables and columns (e.g. Credit Limit, Account Manager exposed) and this one relationship?","note":"No page decides the model's table/column selection; the relationship is only mentioned in the RLS page."},
+{"fact":"F5","verdict":"open","question":"Why are Customer Count and Revenue the only measures, and how is Revenue defined?","note":"No page decides measures."},
+{"fact":"F6","verdict":"covered","page":"decision-dynamic-rls-per-account-manager-userprincipalname-on-cu.md","note":"One read role with USERPRINCIPALNAME filter on customers matches."},
+{"fact":"F7","verdict":"covered","page":"decision-role-membership-limited-to-in-tenant-account-managers.md","note":"Only viewer@contoso.example is a member, as recorded."}
+]}

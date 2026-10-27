@@ -1,0 +1,4 @@
+relationship 'Orders to Customers'
+	fromColumn: Orders.'Customer Id'
+	toColumn: Customers.'Customer Id'
+

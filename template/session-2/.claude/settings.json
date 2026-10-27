@@ -1,0 +1,32 @@
+{
+  "enabledMcpjsonServers": ["microsoft-learn", "wiki"],
+  "permissions": {
+    "allow": [
+      "Bash(./py tools/fab.py:*)",
+      "Bash(./py gate/check_security.py)",
+      "Bash(./py gate/check_rules.py)",
+      "Bash(./py gate/snapshot.py check)",
+      "Bash(./py gate/gate.py)",
+      "Bash(./py gate/new_run.py)",
+      "mcp__microsoft-learn__*",
+      "mcp__wiki__*",
+      "Edit(work/**)",
+      "Write(work/**)"
+    ],
+    "ask": [
+      "Bash(./py gate/snapshot.py sign)"
+    ],
+    "deny": [
+      "Read({{ROOT}}/session-1/**)",
+      "Read({{ROOT}}/review/**)",
+      "Edit(tools/**)", "Edit(gate/**)", "Edit(task/**)", "Edit(data/**)", "Edit(reports/**)", "Edit(wiki/**)",
+      "Edit(.claude/**)", "Edit(CLAUDE.md)", "Edit(.lab-env)", "Edit(py)", "Edit(run.sh)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {"matcher": "Bash|Edit|Write|MultiEdit|NotebookEdit",
+       "hooks": [{"type": "command", "command": "python3 \"$CLAUDE_PROJECT_DIR\"/gate/role_guard.py"}]}
+    ]
+  }
+}

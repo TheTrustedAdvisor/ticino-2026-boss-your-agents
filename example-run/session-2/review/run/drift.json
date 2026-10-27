@@ -1,0 +1,33 @@
+{
+  "reviewer": "drift",
+  "identity": "reviewer@contoso.example",
+  "workspace": "FF Ticino Session 2 DEV",
+  "checked": [
+    "signed snapshot"
+  ],
+  "findings": [
+    {
+      "id": "DRF-000",
+      "severity": "info",
+      "rule": "-",
+      "item": "FF Ticino Session 2 DEV",
+      "title": "no baseline yet",
+      "evidence": "no signed snapshot for this workspace; 2 item(s) read, one is signed after human approval",
+      "remediation": ""
+    }
+  ],
+  "reviewed": {
+    "SemanticModel/sm_sales": {
+      "definition.pbism": "e761066d848bfaec8496b03ec887aa0a158a8c14a2b359240fc43ca46bb54fcf",
+      "definition/database.tmdl": "74a9634cd83c4884cbf7fcfbb0c721d10351e987d8962600546c7e3c05a3d8fa",
+      "definition/expressions.tmdl": "b3d66c7034923c0bdd638de87afa2b88cd1d0b2cc7ec41eeac79dc17848af71c",
+      "definition/model.tmdl": "81178817d6b4d8a22c392f2369d8727779851062c4e4aeabc11663723bc82dd4",
+      "definition/relationships.tmdl": "c7203362608b8c37bfe9be0e8e3cada8d2f5edd4f300b970d37f40bb55bc14a4",
+      "definition/roles/Account Manager.tmdl": "36ba22dd221303df4bbbdd35fab1ff67f2a879e3991bd842ed5f009685cae94c",
+      "definition/tables/Customers.tmdl": "f9de6df35fe59d2ae40a9d89ddc63103c1d0bc3aee8ead7c56c3fe575ee7eff2",
+      "definition/tables/Orders.tmdl": "ae99a1a5c483d0828eaf338c05bc1a818745bb2bdcad5196b99a0dcac4049369"
+    },
+    "Lakehouse/lh_sales": {}
+  },
+  "at": "2026-10-27 16:29:38 UTC"
+}

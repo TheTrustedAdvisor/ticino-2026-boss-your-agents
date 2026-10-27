@@ -1,0 +1,37 @@
+[
+  {
+    "id": "F1",
+    "subject": "how items are named",
+    "text": "items built: Lakehouse \u00abSalesLakehouse\u00bb; SemanticModel \u00abSales\u00bb"
+  },
+  {
+    "id": "F2",
+    "subject": "lakehouse SalesLakehouse: schemas or not",
+    "text": "lakehouse \u00abSalesLakehouse\u00bb: schemas off"
+  },
+  {
+    "id": "F3",
+    "subject": "model Sales: storage mode",
+    "text": "model \u00abSales\u00bb: storage mode Direct Lake on OneLake, reads lakehouse \u00abSalesLakehouse\u00bb"
+  },
+  {
+    "id": "F4",
+    "subject": "model Sales: tables and relationships",
+    "text": "model \u00abSales\u00bb: tables Customers (Account Manager, Credit Limit, Customer ID, Customer Name, Region); Orders (Amount, Customer ID, Order Date, Order ID); relationships Orders.'Customer ID' -> Customers.'Customer ID'"
+  },
+  {
+    "id": "F5",
+    "subject": "model Sales: which measures",
+    "text": "model \u00abSales\u00bb: measures Customers[Customer Count], Orders[Revenue]"
+  },
+  {
+    "id": "F6",
+    "subject": "model Sales: row-level security",
+    "text": "model \u00abSales\u00bb: roles Account Manager (read): Customers = Customers[Account Manager] = USERPRINCIPALNAME()"
+  },
+  {
+    "id": "F7",
+    "subject": "model Sales: who are the role members",
+    "text": "model \u00abSales\u00bb: role members Account Manager: viewer@contoso.example"
+  }
+]

@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Python of the template (needs pyarrow and pyyaml): PY from .lab-env, otherwise python3 on the PATH
+here=$(cd "$(dirname "$0")" && pwd)
+PY=${PY:-$(sed -n 's/^PY=//p' "$here/.lab-env" 2>/dev/null)}
+exec "${PY:-python3}" -u "$@"

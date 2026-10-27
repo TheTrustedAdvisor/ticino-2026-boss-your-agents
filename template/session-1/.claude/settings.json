@@ -1,0 +1,30 @@
+{
+  "enabledMcpjsonServers": ["microsoft-learn", "wiki"],
+  "permissions": {
+    "allow": [
+      "Bash(./py tools/fab.py:*)",
+      "Bash(./py ../review/gate/check_rules.py --lint rules)",
+      "mcp__microsoft-learn__*",
+      "mcp__wiki__*",
+      "Read({{ROOT}}/review/reports/**)",
+      "Edit(work/**)",
+      "Write(work/**)",
+      "Edit(rules/**)",
+      "Write(rules/**)"
+    ],
+    "deny": [
+      "Read({{ROOT}}/review/gate/**)",
+      "Read({{ROOT}}/review/.claude/**)",
+      "Read({{ROOT}}/review/CLAUDE.md)",
+      "Read({{ROOT}}/session-2/**)",
+      "Read({{ROOT}}/wiki/**)",
+      "Read(.claude/**)",
+      "Edit(tools/**)",
+      "Edit(task/**)",
+      "Edit(data/**)",
+      "Edit(.claude/**)",
+      "Edit(CLAUDE.md)",
+      "Edit(.lab-env)"
+    ]
+  }
+}

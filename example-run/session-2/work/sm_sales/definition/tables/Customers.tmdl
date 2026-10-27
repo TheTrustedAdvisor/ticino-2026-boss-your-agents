@@ -1,0 +1,40 @@
+table Customers
+
+	measure 'Number of Customers' = COUNTROWS(Customers)
+		formatString: #,0
+
+	column 'Customer Id'
+		dataType: int64
+		isHidden
+		isKey
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: customer_id
+
+	column 'Customer Name'
+		dataType: string
+		summarizeBy: none
+		sourceColumn: customer_name
+
+	column Region
+		dataType: string
+		summarizeBy: none
+		sourceColumn: region
+
+	column 'Account Manager'
+		dataType: string
+		summarizeBy: none
+		sourceColumn: account_manager_upn
+
+	column 'Credit Limit'
+		dataType: int64
+		formatString: #,0
+		summarizeBy: none
+		sourceColumn: credit_limit
+
+	partition customers = entity
+		mode: directLake
+		source
+			entityName: customers
+			expressionSource: 'DirectLake - lh_sales'
+

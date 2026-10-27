@@ -1,0 +1,26 @@
+{
+  "approved_at": "2026-10-27T16:22:46.967868+00:00",
+  "approved_by": "Matthias Falland",
+  "items": {
+    "Lakehouse/SalesLakehouse": {
+      "id": "<lakehouse-1-id>",
+      "parts": {}
+    },
+    "SemanticModel/Sales": {
+      "id": "<model-1-id>",
+      "parts": {
+        "definition.pbism": "e761066d848bfaec8496b03ec887aa0a158a8c14a2b359240fc43ca46bb54fcf",
+        "definition/database.tmdl": "74a9634cd83c4884cbf7fcfbb0c721d10351e987d8962600546c7e3c05a3d8fa",
+        "definition/expressions.tmdl": "676634f7c45dd0766e62be423cd6b7d4317eec51aa28e193286e171f5e1e961c",
+        "definition/model.tmdl": "81178817d6b4d8a22c392f2369d8727779851062c4e4aeabc11663723bc82dd4",
+        "definition/relationships.tmdl": "94a55e53d38af17c7c9420c74f2c84f7e354e780d2c8b8ff0fa0bce6d4767b12",
+        "definition/roles/Account Manager.tmdl": "36ba22dd221303df4bbbdd35fab1ff67f2a879e3991bd842ed5f009685cae94c",
+        "definition/tables/Customers.tmdl": "21a0d3fdb9b785db53f6cc3b6de412f803bc690d003cf215af3e39ed03c1b22f",
+        "definition/tables/Orders.tmdl": "22bf9e36635d3d851f115b57e460a54bcb03d901f885c7c031a27da8c931a26e"
+      }
+    }
+  },
+  "read_by": "reviewer@contoso.example",
+  "signed_with": "ssh-keygen -Y sign, namespace zero-to-hero (signature removed in the public copy)",
+  "workspace": "FF Ticino Session 1 DEV"
+}
