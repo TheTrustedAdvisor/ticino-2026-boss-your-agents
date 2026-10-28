@@ -1,6 +1,6 @@
 # Boss Your Agents: How AI Secures What AI Teams Build
 
-Material for my talk at the Ticino Data Conference 2026 in Bioggio (30 October 2026): the five steps of the demo as files and commands you can read and rerun, the slides, five recordings of one real run, and the project wiki a run of the same engine produced.
+Material for my talk at the Ticino Data Conference 2026 in Bioggio (30 October 2026): the five steps of the demo as files and commands you can read and rerun, the slides, six recordings of one real run (the sixth shows what the gate blocks when someone renames the model by hand), and the project wiki a run of the same engine produced.
 
 ## The talk in one paragraph
 
@@ -21,7 +21,7 @@ flowchart LR
 | You want | Go to |
 |---|---|
 | the slides | [slides/boss-your-agents-ticino-2026.pdf](slides/boss-your-agents-ticino-2026.pdf) |
-| to see it run | [recordings/](recordings/): five short videos of one real run |
+| to see it run | [recordings/](recordings/): six short videos of one real run |
 | what a project wiki looks like | [example-run/](example-run/): the wiki, gate reports and plan of a separate run of the same engine |
 | to rebuild it in your own tenant | [template/](template/) and the steps below |
 
