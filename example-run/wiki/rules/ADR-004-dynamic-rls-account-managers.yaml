@@ -1,0 +1,17 @@
+id: ADR-004
+title: Dynamic RLS on account manager UPN, tenant users as members
+status: accepted
+decided_by: the session
+decision: >-
+  Semantic-model role Account Managers (read) filters Customers by account_manager_upn = USERPRINCIPALNAME();
+  the filter reaches Orders through the relationship. Every account manager whose UPN is a tenant user is a
+  role member (today viewer@contoso.example); example.com addresses are pending until Sales Ops provides tenant UPNs.
+page: adr-004-dynamic-rls-on-account-manager-upn-tenant-users-as-membe.md
+sources:
+  - https://learn.microsoft.com/fabric/security/service-admin-row-level-security
+  - https://learn.microsoft.com/fabric/security/service-admin-row-level-security#considerations-and-limitations-for-dynamic-rls
+check:
+  rls:
+    table_with_columns: [account_manager_upn]
+    filter_contains: USERPRINCIPALNAME()
+    min_members: 1

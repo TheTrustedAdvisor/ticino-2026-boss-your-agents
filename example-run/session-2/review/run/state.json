@@ -4,17 +4,21 @@
   "items": [
     {
       "type": "Lakehouse",
-      "name": "lh_sales"
+      "name": "lh_sales",
+      "id": "<lakehouse-2-id>"
     },
     {
       "type": "SemanticModel",
-      "name": "sm_sales"
+      "name": "sm_sales",
+      "id": "<model-2-id>"
     }
   ],
   "lakehouses": [
     {
       "name": "lh_sales",
-      "schemas": false
+      "schemas": false,
+      "sql_server": "<sql-endpoint-2-host>.datawarehouse.fabric.microsoft.com",
+      "sql_endpoint_id": "<id-2-id>"
     }
   ],
   "models": [
@@ -28,12 +32,12 @@
           "columns": [
             "Account Manager",
             "Credit Limit",
-            "Customer Id",
             "Customer Name",
-            "Region"
+            "Region",
+            "customer_id"
           ],
           "measures": [
-            "Number of Customers"
+            "Customer Count"
           ],
           "source_columns": [
             "account_manager_upn",
@@ -43,19 +47,23 @@
             "region"
           ],
           "column_sources": {
-            "Customer Id": "customer_id",
+            "customer_id": "customer_id",
             "Customer Name": "customer_name",
             "Region": "region",
             "Account Manager": "account_manager_upn",
             "Credit Limit": "credit_limit"
+          },
+          "entity": {
+            "name": "customers",
+            "schema": null
           }
         },
         "Orders": {
           "columns": [
-            "Amount",
-            "Customer Id",
             "Order Date",
-            "Order Id"
+            "amount",
+            "customer_id",
+            "order_id"
           ],
           "measures": [
             "Revenue"
@@ -67,23 +75,27 @@
             "order_id"
           ],
           "column_sources": {
-            "Order Id": "order_id",
-            "Customer Id": "customer_id",
+            "order_id": "order_id",
+            "customer_id": "customer_id",
             "Order Date": "order_date",
-            "Amount": "amount"
+            "amount": "amount"
+          },
+          "entity": {
+            "name": "orders",
+            "schema": null
           }
         }
       },
       "relationships": [
         {
-          "from": "Orders.'Customer Id'",
-          "to": "Customers.'Customer Id'",
+          "from": "Orders.customer_id",
+          "to": "Customers.customer_id",
           "from_table": "Orders",
           "to_table": "Customers"
         }
       ],
       "roles": {
-        "Account Manager": {
+        "Account Managers": {
           "modelPermission": "read",
           "filters": {
             "Customers": "Customers[Account Manager] = USERPRINCIPALNAME()"
@@ -91,7 +103,7 @@
         }
       },
       "members": {
-        "Account Manager": [
+        "Account Managers": [
           "viewer@contoso.example"
         ]
       },

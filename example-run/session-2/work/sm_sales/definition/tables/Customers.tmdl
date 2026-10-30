@@ -1,13 +1,12 @@
 table Customers
 
-	measure 'Number of Customers' = COUNTROWS(Customers)
+	measure 'Customer Count' = COUNTROWS(Customers)
 		formatString: #,0
 
-	column 'Customer Id'
+	column customer_id
 		dataType: int64
 		isHidden
 		isKey
-		formatString: 0
 		summarizeBy: none
 		sourceColumn: customer_id
 
@@ -32,9 +31,9 @@ table Customers
 		summarizeBy: none
 		sourceColumn: credit_limit
 
-	partition customers = entity
+	partition Customers = entity
 		mode: directLake
 		source
 			entityName: customers
-			expressionSource: 'DirectLake - lh_sales'
+			expressionSource: DatabaseQuery
 

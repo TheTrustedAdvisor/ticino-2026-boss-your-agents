@@ -1,5 +1,5 @@
-expression DatabaseQuery =
+expression DL_sales_lh =
 		let
-		    Source = AzureStorage.DataLake("https://onelake.dfs.fabric.microsoft.com/<workspace-1-id>/<lakehouse-1-id>", [HierarchicalNavigation = true])
+		    Source = AzureStorage.DataLake("https://onelake.dfs.fabric.microsoft.com/<workspace-1-id>/<lakehouse-1-id>", [HierarchicalNavigation=true])
 		in
 		    Source

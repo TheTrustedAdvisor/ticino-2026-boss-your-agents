@@ -1,0 +1,16 @@
+id: ADR-005
+title: Item naming with type prefixes
+status: accepted
+decided_by: the human (Matthias Falland, project owner)
+decision: >-
+  Items use type prefixes lh_, sm_, rpt_, nb_, lower case, underscores, so anyone can tell an item's type
+  from its name. Applies from the next delivery; the deployed sales_lh and Sales are to be renamed then.
+page: adr-005-item-naming-with-type-prefixes.md
+sources:
+  - https://learn.microsoft.com/power-bi/guidance/powerbi-implementation-planning-workspaces-tenant-level-planning#workspace-naming-conventions
+check:
+  item_names:
+    Lakehouse: '^lh_[a-z0-9]+(_[a-z0-9]+)*$'
+    SemanticModel: '^sm_[a-z0-9]+(_[a-z0-9]+)*$'
+    Report: '^rpt_[a-z0-9]+(_[a-z0-9]+)*$'
+    Notebook: '^nb_[a-z0-9]+(_[a-z0-9]+)*$'

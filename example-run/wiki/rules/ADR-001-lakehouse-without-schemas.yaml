@@ -1,0 +1,13 @@
+id: ADR-001
+title: Lakehouse without schemas, tables loaded over OneLake
+status: accepted
+decided_by: the session
+decision: >-
+  Lakehouse sales_lh is created without schemas; customers.csv and orders.csv are uploaded to Files/raw/
+  and written as Delta tables customers and orders under Tables/ with the OneLake engine (pyarrow, no Spark).
+page: adr-001-lakehouse-without-schemas-tables-loaded-over-onelake.md
+sources:
+  - https://learn.microsoft.com/fabric/data-engineering/lakehouse-overview#automatic-table-discovery-and-registration
+  - https://learn.microsoft.com/rest/api/fabric/lakehouse/tables/load-table
+check:
+  lakehouse_schemas: false

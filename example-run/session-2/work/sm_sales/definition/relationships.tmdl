@@ -1,4 +1,4 @@
-relationship 'Orders to Customers'
-	fromColumn: Orders.'Customer Id'
-	toColumn: Customers.'Customer Id'
+relationship orders_customers
+	fromColumn: Orders.customer_id
+	toColumn: Customers.customer_id
 

@@ -1,19 +1,17 @@
 table Orders
 
-	measure Revenue = SUM(Orders[Amount])
+	measure Revenue = SUM(Orders[amount])
 		formatString: #,0
 
-	column 'Order ID'
+	column order_id
 		dataType: int64
 		isHidden
-		formatString: 0
 		summarizeBy: none
 		sourceColumn: order_id
 
-	column 'Customer ID'
+	column customer_id
 		dataType: int64
 		isHidden
-		formatString: 0
 		summarizeBy: none
 		sourceColumn: customer_id
 
@@ -23,15 +21,14 @@ table Orders
 		summarizeBy: none
 		sourceColumn: order_date
 
-	column Amount
+	column amount
 		dataType: int64
 		isHidden
-		formatString: #,0
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: amount
 
 	partition Orders = entity
 		mode: directLake
 		source
 			entityName: orders
-			expressionSource: DatabaseQuery
+			expressionSource: DL_sales_lh

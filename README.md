@@ -22,7 +22,7 @@ flowchart LR
 |---|---|
 | the slides | [slides/boss-your-agents-ticino-2026.pdf](slides/boss-your-agents-ticino-2026.pdf) |
 | to see it run | [recordings/](recordings/): six short videos of one real run |
-| what a project wiki looks like | [example-run/](example-run/): the wiki, gate reports and plan of a separate run of the same engine |
+| what a project wiki looks like | [example-run/](example-run/): the wiki, gate reports and plan of the recorded run of 28 October 2026 |
 | to rebuild it in your own tenant | [template/](template/) and the steps below |
 
 ## The five steps

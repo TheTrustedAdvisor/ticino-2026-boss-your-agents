@@ -1,0 +1,14 @@
+id: ADR-006
+title: Account-manager rule in every engine (model and SQL endpoint)
+status: accepted
+decided_by: the human (Matthias Falland, project owner)
+decision: >-
+  The account-manager rule applies wherever the table can be read: in the model and in the SQL endpoint.
+  A role member reads only their own customers rows through the SQL analytics endpoint of the lakehouse too
+  (security policy rls.customers_account_manager, filter predicate on dbo.customers(account_manager_upn), no exemption).
+page: adr-006-account-manager-rule-in-every-engine-model-and-sql-endpo.md
+sources:
+  - https://learn.microsoft.com/fabric/data-warehouse/row-level-security
+check:
+  rls_every_engine:
+    table_with_columns: [account_manager_upn]

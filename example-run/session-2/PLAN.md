@@ -1,48 +1,55 @@
-# Plan: Sales semantic model for account managers (task/sales-request.md, Giulia, Sales Operations)
+# Plan: Sales request (Giulia, Sales Operations) - session 2
 
-Workspace: FF Ticino Session 2 DEV (<workspace-2-id>), empty at start.
-Identity: builder@contoso.example (builder). Prior wiki read: ADR-001, ADR-002, ADR-003, ADR-004, the five
-decision pages, DRF-000, SEC-010.
+Workspace: FF Ticino Session 2 DEV (a12f95a1-...), empty at start. Identity: builder@contoso.example (builder).
+Request: `task/sales-request.md`. Data: `data/customers.csv` (60 rows, 3 account managers x 20 customers),
+`data/orders.csv` (600 rows; all 60 customer ids exist in customers).
+
+Wiki read before planning: ADR-001..ADR-006, the 8 decision pages, SEC-010, SEC-020, DRF-000, and
+`wiki/rules/` (ADR-001, -002, -004, -005, -006 yaml).
 
 ## Items
 
-| Item | Type | Name | Basis |
+| Item | Type | Name | Follows |
 |---|---|---|---|
-| Lakehouse | Lakehouse | `lh_sales` | ADR-004 (prefix `lh_`), ADR-001 (no schemas) |
-| Delta tables | in `lh_sales` | `customers`, `orders` | ADR-001 (upload to `Files/raw/`, `load-table --engine onelake`) |
-| Semantic model | SemanticModel | `sm_sales` | ADR-004 (prefix `sm_`), ADR-002 (Direct Lake on OneLake) |
+| Lakehouse | Lakehouse | `lh_sales` (no schemas) | ADR-005 (type prefixes, applies from this delivery), ADR-001 |
+| Tables | Delta | `customers`, `orders` under `Tables/`, CSVs in `Files/raw/`, OneLake engine (no Spark) | ADR-001 |
+| Semantic model | SemanticModel | `sm_sales` | ADR-005, ADR-002, ADR-003, ADR-004 |
+| SQL endpoint policy | T-SQL objects in `lh_sales` endpoint | schema `rls`, TVF `rls.fn_account_manager`, policy `rls.customers_account_manager` | ADR-006, SEC-020 |
 
-## Steps
+Model `sm_sales` (definition in `work/sm_sales/`):
+- Direct Lake on OneLake: shared expression `AzureStorage.DataLake("https://onelake.dfs.fabric.microsoft.com/<ws>/<lh>")`,
+  partitions `mode: directLake`, no `schemaName` (lakehouse without schemas) (ADR-002).
+- Star schema (ADR-003): `Customers` (Customer Name, Region, Account Manager, Credit Limit; key hidden),
+  `Orders` (order_id, Order Date, amount; keys hidden), Orders[customer_id] *:1 Customers[customer_id], single direction.
+  Measures `Revenue = SUM(Orders[amount])`, `Customer Count = COUNTROWS(Customers)`; numeric columns `summarizeBy: none`.
 
-1. `lakehouse create lh_sales` (no `--schemas`, ADR-001).
-2. Upload `data/customers.csv`, `data/orders.csv` to `Files/raw/`; `load-table` each with the OneLake engine
-   (ADR-001: Spark Load Table API throttled on F2). Check `lakehouse schema` for column types.
-3. Write `work/sm_sales/` (definition.pbism + TMDL):
-   - `expressions.tmdl`: shared expression `AzureStorage.DataLake("https://onelake.dfs.fabric.microsoft.com/<ws id>/<lakehouse id>")` (ADR-002).
-   - `tables/Customers.tmdl` (entity `customers`, no `schemaName`): Customer Name, Region, Account Manager
-     (from `account_manager_upn`), Credit Limit; `customer_id` hidden key. Measure `Number of Customers` = `COUNTROWS(Customers)`.
-   - `tables/Orders.tmdl` (entity `orders`): hidden keys/amount columns, Order Date; measure `Revenue` = `SUM(Orders[Amount])`.
-   - `relationships.tmdl`: Orders[Customer Id] -> Customers[Customer Id], many-to-one, single direction.
-   - `roles/Account Manager.tmdl`: modelPermission read, `Customers[Account Manager] = USERPRINCIPALNAME()` (ADR-003).
-4. `model lint`, then `model deploy work/sm_sales --name sm_sales`; `model query` to check the measures.
-5. `model members add` for in-tenant account managers only (ADR-003): `viewer@contoso.example`.
-   `giulia.bernasconi@example.com` and `luca.ferrari@example.com` are not tenant users; not added, open point for Sales Ops.
+## How the model is secured
 
-## How the model is secured, and why
+1. Semantic-model role `Account Managers` (modelPermission read), dynamic filter
+   `Customers[account_manager_upn] = USERPRINCIPALNAME()`; reaches Orders through the relationship (ADR-004).
+2. Role members: account managers whose UPN is a tenant user: `viewer@contoso.example`.
+   `luca.ferrari@example.com` and `giulia.bernasconi@example.com` are not tenant users (ADR-004); they stay pending.
+3. Same rule in the SQL analytics endpoint of `lh_sales` (ADR-006, answer to SEC-020): filter predicate on
+   `dbo.customers(account_manager_upn)` matching `LOWER(USER_NAME())`, no exemption. Script `work/sql/customers-rls.sql`.
+   The Direct Lake on OneLake model reads Delta files, not the endpoint, so it is unaffected.
 
-- "Every account manager should be able to use it" = each manager opens the model and sees only their own
-  customers (Credit Limit and revenue are sensitive). One dynamic role, filter on the mapping column, reaches
-  Orders over the single-direction relationship (ADR-003; https://learn.microsoft.com/fabric/security/service-admin-row-level-security).
-- Direct Lake on OneLake: no DirectQuery fallback, supports semantic-model RLS (ADR-002;
-  https://learn.microsoft.com/fabric/fundamentals/direct-lake-overview#comparison-of-storage-modes).
-- RLS only applies to users without Write: account managers must be workspace Viewer or item Read only, never
-  Contributor+ (https://learn.microsoft.com/fabric/fundamentals/direct-lake-security-integration#data-access-rule-options).
-  The reviewer cannot read workspace roles (SEC-010): a workspace admin must confirm this.
-- Open point carried over (ADR-003): Docs strongly recommend a fixed-identity cloud connection with SSO disabled
-  for semantic-model RLS; under SSO users need Read+ReadAll on `lh_sales` and could bypass RLS through OneLake.
-  The toolkit cannot create connections; a workspace admin binds one. Users get no item permission on `lh_sales`.
+Why: "every account manager should be able to use it" = one model, each AM sees only their own customers and
+revenue; the rule must hold in every engine that can read the table (ADR-006).
 
-## Governance
+## Known open items (not decided by this build; for the human)
 
-- Every decision recorded as its own wiki page (category `decision`) when made.
-- New workspace, so there is no signed baseline for it (cf. DRF-000); the builder never signs snapshots or runs the gate.
+- `dbo.orders` in the SQL endpoint has no policy (open item of ADR-006 / SEC-020).
+- Spark/OneLake reads of `lh_sales` are not covered by the SQL policy.
+- SEC-010: workspace role holders (Admin/Member/Contributor) bypass model RLS; a workspace admin must check.
+- ADR-004: fixed-identity cloud connection or OneLake read for AMs, Viewer role/sharing: workspace admin.
+- DRF-000: the signed baseline belongs to Session 1; this workspace has new items and needs its own approval.
+
+## Sources
+
+- https://learn.microsoft.com/fabric/data-engineering/lakehouse-overview#automatic-table-discovery-and-registration
+- https://learn.microsoft.com/fabric/fundamentals/direct-lake-develop#power-query-connectors
+- https://learn.microsoft.com/fabric/fundamentals/direct-lake-power-bi-desktop#migrate-direct-lake-on-sql-semantic-models-to-direct-lake-on-onelake
+- https://learn.microsoft.com/power-bi/guidance/star-schema
+- https://learn.microsoft.com/fabric/security/service-admin-row-level-security
+- https://learn.microsoft.com/fabric/data-warehouse/row-level-security
+- https://learn.microsoft.com/power-bi/guidance/powerbi-implementation-planning-workspaces-tenant-level-planning#workspace-naming-conventions

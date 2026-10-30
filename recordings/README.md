@@ -13,8 +13,7 @@ are visible as jumps in the timer); the panel on the right explains each scene.
 | [step-6.mp4](step-6.mp4) | 1:42 | Step 6, Monday morning: the model renamed by hand, `/review` blocks with DEC-201 and DRF-003, renamed back, `/review` passes |
 
 In this run session 1 named its items `sales_lh` and `Sales`, and session 2 built `lh_sales` and
-`sm_sales`. The files in [../example-run/](../example-run/) come from a separate run of the same engine, so
-their item names differ.
+`sm_sales`. The files in [../example-run/](../example-run/) come from this same run.
 
 The sign-in names of the demo tenant are replaced in the picture by `builder@contoso.example`,
 `reviewer@contoso.example` and `viewer@contoso.example`. The replacement runs on the emulated screen, so

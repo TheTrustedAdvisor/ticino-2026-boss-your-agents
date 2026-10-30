@@ -1,9 +1,9 @@
-{"facts": [
-{"fact":"F1","verdict":"open","question":"Why are the items named SalesLakehouse and Sales, and is that the naming convention you want?","note":"Names appear only on pages about other choices."},
-{"fact":"F2","verdict":"covered","page":"decision-lakehouse-load-via-onelake-pyarrow-engine-no-schemas.md","note":"Page: no schemas; state: schemas off."},
-{"fact":"F3","verdict":"covered","page":"decision-direct-lake-on-onelake-storage-mode-for-the-sales-model.md","note":"Direct Lake on OneLake matches."},
-{"fact":"F4","verdict":"open","question":"Why does the model include exactly these tables and columns (e.g. Credit Limit, Account Manager exposed) and this one relationship?","note":"No page decides the model's table/column selection; the relationship is only mentioned in the RLS page."},
-{"fact":"F5","verdict":"open","question":"Why are Customer Count and Revenue the only measures, and how is Revenue defined?","note":"No page decides measures."},
-{"fact":"F6","verdict":"covered","page":"decision-dynamic-rls-per-account-manager-userprincipalname-on-cu.md","note":"One read role with USERPRINCIPALNAME filter on customers matches."},
-{"fact":"F7","verdict":"covered","page":"decision-role-membership-limited-to-in-tenant-account-managers.md","note":"Only viewer@contoso.example is a member, as recorded."}
+{"facts":[
+{"fact":"F1","verdict":"covered","page":"item-naming-type-prefixes-lh-sm-rpt-nb-lower-case-underscores.md","note":"Page applies from the next delivery; deployed names sales_lh and Sales predate it, so no contradiction."},
+{"fact":"F2","verdict":"covered","page":"lakehouse-sales-lh-without-schemas-tables-loaded-over-onelake.md","note":"Page: no schemas; state: schemas off."},
+{"fact":"F3","verdict":"covered","page":"direct-lake-on-onelake-not-on-sql-endpoint.md","note":"Direct Lake on OneLake matches."},
+{"fact":"F4","verdict":"covered","page":"star-schema-customers-dimension-orders-fact-two-explicit-measure.md","note":"Two tables and Orders->Customers relationship on customer_id match."},
+{"fact":"F5","verdict":"covered","page":"star-schema-customers-dimension-orders-fact-two-explicit-measure.md","note":"Revenue and Customer Count match."},
+{"fact":"F6","verdict":"covered","page":"dynamic-rls-on-account-manager-upn-for-the-account-managers-role.md","note":"Role Account Managers, read, USERPRINCIPALNAME filter on Customers; column shown by display name Account Manager (account_manager_upn), not a real difference."},
+{"fact":"F7","verdict":"covered","page":"rls-role-members-only-tenant-users-added-example-com-ams-pending.md","note":"Only viewer@contoso.example is a member, as recorded."}
 ]}

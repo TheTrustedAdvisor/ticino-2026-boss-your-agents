@@ -6,4 +6,4 @@ model Model
 ref table Customers
 ref table Orders
 
-ref role 'Account Manager'
+ref role 'Account Managers'

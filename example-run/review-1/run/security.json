@@ -5,7 +5,8 @@
   "checked": [
     "1 semantic model(s): definition (getDefinition, TMDL)",
     "role members of Sales (XMLA, inside Fabric)",
-    "Sales: 3 sensitive column(s) in 1 table(s)"
+    "Sales: 1 table(s) with sensitive-looking columns, rows of 1 of them filtered by a role with members (structure, not the filter's effect)",
+    "Sales / Customers: RLS effect tested, probe reads 20 of 60 rows of [dbo].[customers] in lakehouse sales_lh through its SQL analytics endpoint (<sql-endpoint-host>...), none of another user, its own rows: 20"
   ],
   "findings": [
     {
@@ -18,5 +19,5 @@
       "remediation": ""
     }
   ],
-  "at": "2026-10-27 16:22:00 UTC"
+  "at": "2026-10-28 07:35:09 UTC"
 }

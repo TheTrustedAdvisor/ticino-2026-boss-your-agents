@@ -1,4 +1,4 @@
-expression 'DirectLake - lh_sales' =
+expression DatabaseQuery =
 		let
 		    Source = AzureStorage.DataLake("https://onelake.dfs.fabric.microsoft.com/<workspace-2-id>/<lakehouse-2-id>", [HierarchicalNavigation=true])
 		in

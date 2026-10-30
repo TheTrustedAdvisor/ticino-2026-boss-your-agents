@@ -1,0 +1,13 @@
+id: ADR-002
+title: Direct Lake on OneLake for the Sales model
+status: accepted
+decided_by: the session
+decision: >-
+  The semantic model Sales uses Direct Lake on OneLake (shared expression AzureStorage.DataLake on the
+  lakehouse, partitions mode directLake), not Direct Lake on the SQL analytics endpoint and not Import.
+page: adr-002-direct-lake-on-onelake-for-the-sales-model.md
+sources:
+  - https://learn.microsoft.com/fabric/fundamentals/direct-lake-how-it-works#directquery-fallback
+  - https://learn.microsoft.com/fabric/fundamentals/direct-lake-develop#power-query-connectors
+check:
+  storage_mode: direct_lake_onelake

@@ -1,8 +1,8 @@
 ---
 title: "ADR-002 Direct Lake on OneLake for the Sales model"
 tags: ["adr"]
-created: 2026-10-27T16:23:32.576Z
-updated: 2026-10-27T16:23:32.576Z
+created: 2026-10-28T07:40:35.281Z
+updated: 2026-10-28T07:40:35.281Z
 sources: []
 links: []
 category: architecture
@@ -14,42 +14,42 @@ schemaVersion: 1
 
 ## Status
 
-Accepted. Decided by the session (data engineer, builder@contoso.example) on 2026-10-27.
+Accepted. Decided by the session (data engineer, identity builder@contoso.example), 2026-10-28.
 
 ## Context
 
-The request asks for a Direct Lake semantic model over the sales lakehouse, and the model carries row-level security (see ADR-003).
+The semantic model `Sales` has to read the Delta tables of `sales_lh` and support row-level security.
 
 ## Decision
 
-The `Sales` model uses Direct Lake on OneLake. A shared expression, `AzureStorage.DataLake("https://onelake.dfs.fabric.microsoft.com/<ws>/<lakehouse>")`, is referenced by one `directLake` partition per table. The partitions have no `schemaName` because the lakehouse has no schemas (ADR-001).
+The `Sales` model uses Direct Lake on OneLake. Its shared expression is `AzureStorage.DataLake("https://onelake.dfs.fabric.microsoft.com/<ws id>/<lakehouse id>")` and its partitions use `mode: directLake`.
 
 ## Why
 
-- Direct Lake on OneLake never falls back to DirectQuery. With Direct Lake on SQL, RLS defined on the SQL endpoint forces a DirectQuery fallback.
-- It supports semantic-model RLS, which this model needs.
+Microsoft recommends Direct Lake on OneLake for new semantic models. It never falls back to DirectQuery, and it supports semantic-model RLS.
 
 ## Alternatives considered
 
-- Direct Lake on the SQL analytics endpoint: risks falling back to DirectQuery.
-- Import: ruled out, because the request asks for Direct Lake.
+- Direct Lake on the SQL analytics endpoint: can fall back to DirectQuery without notice.
+- Import: needs refreshes that copy the data, which the request did not ask for.
 
 ## Sources
 
-- https://learn.microsoft.com/fabric/fundamentals/direct-lake-overview#comparison-of-storage-modes
-- https://learn.microsoft.com/fabric/fundamentals/direct-lake-develop#direct-lake-model-metadata
+- https://learn.microsoft.com/fabric/fundamentals/direct-lake-how-it-works#directquery-fallback
+- https://learn.microsoft.com/fabric/fundamentals/direct-lake-develop#power-query-connectors
 
 ## Evidence from the review
 
-- Fact F3: model «Sales»: storage mode Direct Lake on OneLake, reads lakehouse «SalesLakehouse». The decisions reviewer marked it as covered by this decision.
-- What the reviewer read: the model definition (getDefinition, TMDL), as reviewer@contoso.example, on 2026-10-27.
+- F3 (both rounds): model «Sales»: storage mode Direct Lake on OneLake, reads lakehouse «sales_lh». It is covered by this decision.
+- The reviewer read the model definition through getDefinition (TMDL; `definition/expressions.tmdl` is among the signed parts) and classified the storage as `direct_lake_onelake`.
+- The SQL endpoint security policy (ADR-006) leaves the model unaffected because the model reads Delta files, not the endpoint. As the builder, DAX `COUNTROWS(Customers)` still returns 60.
 - Findings: none.
 
 ## Decision log
 
-- `decision-direct-lake-on-onelake-storage-mode-for-the-sales-model.md`
+- `direct-lake-on-onelake-not-on-sql-endpoint.md`
 
 ## Rule
 
-`rules/ADR-002-direct-lake-onelake.yaml`
+`rules/ADR-002-direct-lake-on-onelake.yaml`
 

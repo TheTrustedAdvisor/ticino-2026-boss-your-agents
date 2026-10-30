@@ -1,0 +1,40 @@
+[
+  {
+    "model": "Sales",
+    "table": "Customers",
+    "lakehouse": "sales_lh",
+    "sql_table": "[dbo].[customers]",
+    "endpoint": "<sql-endpoint-1-host>.datawarehouse.fabric.microsoft.com",
+    "probe": "viewer@contoso.example",
+    "probe_roles": [
+      "Account Managers"
+    ],
+    "user_column": "account_manager_upn",
+    "total": 60,
+    "own": 20,
+    "total_error": null,
+    "probe_error": null,
+    "probe_rows": 20,
+    "probe_own_rows": 20,
+    "foreign_rows": 0
+  },
+  {
+    "model": "Sales",
+    "table": "Orders",
+    "lakehouse": "sales_lh",
+    "sql_table": "[dbo].[orders]",
+    "endpoint": "<sql-endpoint-1-host>.datawarehouse.fabric.microsoft.com",
+    "probe": "viewer@contoso.example",
+    "probe_roles": [
+      "Account Managers"
+    ],
+    "user_column": null,
+    "total": null,
+    "own": null,
+    "total_error": "no user column in the role filter",
+    "probe_error": null,
+    "probe_rows": 600,
+    "probe_own_rows": null,
+    "foreign_rows": 600
+  }
+]

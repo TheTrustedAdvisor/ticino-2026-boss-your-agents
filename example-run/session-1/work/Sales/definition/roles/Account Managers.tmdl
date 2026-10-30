@@ -1,5 +1,4 @@
-role 'Account Manager'
+role 'Account Managers'
 	modelPermission: read
 
 	tablePermission Customers = Customers[Account Manager] = USERPRINCIPALNAME()
-
