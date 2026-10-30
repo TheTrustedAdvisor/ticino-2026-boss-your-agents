@@ -15,7 +15,19 @@ are visible as jumps in the timer); the panel on the right explains each scene.
 In this run session 1 named its items `sales_lh` and `Sales`, and session 2 built `lh_sales` and
 `sm_sales`. The files in [../example-run/](../example-run/) come from this same run.
 
-The sign-in names of the demo tenant are replaced in the picture by `builder@contoso.example`,
-`reviewer@contoso.example` and `viewer@contoso.example`. The replacement runs on the emulated screen, so
-where a name was longer than its placeholder the rest of its cells stay blank. The demo identities' short
-names (for example «ff-demo-contributor») and the workspace names are as they were.
+Since 30 October 2026 the recordings are the versions shown on stage: each one zooms in on the
+evidence and marks it with a frame. They show the demo identities with their real sign-in names in the
+demo tenant (for example ff-demo-viewer@matthiasgessenay.onmicrosoft.com); it is a lab tenant used
+only for this demo.
+
+## The Fabric side
+
+Four short clips show in the Fabric portal what the agents built. They are silent and zoom in on the
+evidence.
+
+| File | Length | What it shows |
+|---|---|---|
+| [fabric-step-1.mp4](fabric-step-1.mp4) | 0:35 | Step 1: workspace one, the model in TMDL view, the role Account Managers with its filter on Customers and its one member |
+| [fabric-step-3.mp4](fabric-step-3.mp4) | 0:37 | Step 3: the SQL analytics endpoint of the lakehouse, a query on sys.security_policies shows the new policy, enabled, on dbo.customers with its predicate |
+| [fabric-step-5.mp4](fabric-step-5.mp4) | 0:37 | Step 5: workspace two built by session 2, the same role and filter in the model and the same policy in the SQL endpoint |
+| [fabric-step-6.mp4](fabric-step-6.mp4) | 0:23 | Monday morning: the model renamed by hand in the portal, from sm_sales to Sales Model |
